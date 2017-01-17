@@ -76,8 +76,8 @@ function [M,P] = tf_smooth(M,P,Y,A,Q,H,R,use_inf)
   if use_inf
     zz = zeros(size(M));
     SS = zeros(size(P));
-    IR = inv(R);
-    IQ = inv(Q);
+    IR = effinv(R);
+    IQ = effinv(Q);
     z = zeros(size(M,1),1);
     S = zeros(size(M,1),size(M,1));
     for k=size(M,2):-1:1
@@ -92,7 +92,7 @@ function [M,P] = tf_smooth(M,P,Y,A,Q,H,R,use_inf)
   else
     BM = zeros(size(M));
     BP = zeros(size(P));
-    IA = inv(A);
+    IA = effinv(A);
     IQ = IA*Q*IA';  
     fm = zeros(size(M,1),1);
     fP = 1e12*eye(size(M,1));
@@ -112,12 +112,12 @@ function [M,P] = tf_smooth(M,P,Y,A,Q,H,R,use_inf)
   if use_inf
     for k=1:size(M,2)-1
       G = P(:,:,k) * SS(:,:,k) / (eye(size(M,1)) + P(:,:,k) * SS(:,:,k));
-      P(:,:,k) = inv(inv(P(:,:,k)) + SS(:,:,k));
+      P(:,:,k) = effinv(effinv(P(:,:,k)) + SS(:,:,k));
       M(:,k) = M(:,k) + P(:,:,k) * zz(:,k) - G * M(:,k);
     end
   else
     for k=1:size(M,2)-1
-      tmp = inv(inv(P(:,:,k)) + inv(BP(:,:,k)));
+      tmp = effinv(effinv(P(:,:,k)) + effinv(BP(:,:,k)));
       M(:,k) = tmp * (P(:,:,k)\M(:,k) + BP(:,:,k)\BM(:,k));
       P(:,:,k) = tmp;
     end

@@ -156,7 +156,7 @@ function [M,P] = utf_smooth1(M,P,Y,ia,Q,aparam,h,R,...
   % Combine estimates
   %
   for k=1:size(M,2)-1
-    tmp = inv(inv(P(:,:,k)) + inv(BP(:,:,k)));
+    tmp = effinv(effinv(P(:,:,k)) + effinv(BP(:,:,k)));
     M(:,k) = tmp * (P(:,:,k)\M(:,k) + BP(:,:,k)\BM(:,k));
     P(:,:,k) = tmp;
   end

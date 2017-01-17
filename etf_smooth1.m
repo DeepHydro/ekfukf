@@ -13,7 +13,7 @@
 %   Q - Process noise of discrete model           (optional, default zero)
 %  ia - Inverse prediction function as vector,
 %       inline function, function handle or name
-%       of function in form ia(x,param)           (optional, default inv(A(x))*X)
+%       of function in form ia(x,param)           (optional, default effinv(A(x))*X)
 %   W - Derivative of a() with respect to noise q
 %       as matrix, inline function, function handle
 %       or name of function in form W(x,param)    (optional, default identity)
@@ -152,11 +152,11 @@ function [M,P] = etf_smooth1(M,P,Y,A,Q,ia,W,aparam,H,R,h,V,hparam,same_p_a,same_
     if isempty(A)
       IA = [];
     elseif isnumeric(A)
-      IA = inv(A);
+      IA = effinv(A);
     elseif isstr(A) | strcmp(class(A),'function_handle')
-      IA = inv(feval(A,fm,aparams));
+      IA = effinv(feval(A,fm,aparams));
     else
-      IA = inv(A(fm,aparams));
+      IA = effinv(A(fm,aparams));
     end
     
     if isempty(W)
@@ -184,7 +184,7 @@ function [M,P] = etf_smooth1(M,P,Y,A,Q,ia,W,aparam,H,R,h,V,hparam,same_p_a,same_
   % Combine estimates
   %
   for k=1:size(M,2)-1
-    tmp = inv(inv(P(:,:,k)) + inv(BP(:,:,k)));
+    tmp = effinv(effinv(P(:,:,k)) + effinv(BP(:,:,k)));
     M(:,k) = tmp * (P(:,:,k)\M(:,k) + BP(:,:,k)\BM(:,k));
     P(:,:,k) = tmp;
   end

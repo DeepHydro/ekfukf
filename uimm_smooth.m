@@ -142,7 +142,7 @@ function [x_sk,P_sk,x_sik,P_sik,mu_sk] = uimm_smooth(MM,PP,MM_i,PP_i,MU,p_ij,mu_
             if isempty(a) | isempty(a{i2})
                 [x_kp{i2}(ind{i2}), P_kp{i2}(ind{i2},ind{i2})] = kf_predict(x_bki{i2}(ind{i2}),...
                                                                   P_bki{i2}(ind{i2},ind{i2}),...
-                                                                  inv(A2),Q{i2});
+                                                                  effinv(A2),Q{i2});
             else
                 [x_kp{i2}(ind{i2}), P_kp{i2}(ind{i2},ind{i2})] = ukf_predict1(x_bki{i2}(ind{i2}),...
                                                                   P_bki{i2}(ind{i2},ind{i2}),...
@@ -216,10 +216,10 @@ function [x_sk,P_sk,x_sik,P_sik,mu_sk] = uimm_smooth(MM,PP,MM_i,PP_i,MU,p_ij,mu_
                 PP1 = PP_def;
                 PP1(ind{i2},ind{i2}) = PP_i{i2,k};
 
-                iPP1 = inv(PP1);
-                iPP2 = inv(P_kp{i1});
+                iPP1 = effinv(PP1);
+                iPP2 = effinv(P_kp{i1});
                 
-                P_jis{i2,i1} = inv(iPP1+iPP2);
+                P_jis{i2,i1} = effinv(iPP1+iPP2);
                 x_jis{i2,i1} = P_jis{i2,i1}*(iPP1*MM1 + iPP2*x_kp{i1});
             end
         end

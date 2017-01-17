@@ -148,7 +148,7 @@ function [x_sk,P_sk,x_sik,P_sik,mu_sk] = eimm_smooth(MM,PP,MM_i,PP_i,MU,p_ij,mu_
             % Backward-time EKF prediction step
             [x_kp{i2}(ind{i2}), P_kp{i2}(ind{i2},ind{i2})] = ekf_predict1(x_bki{i2}(ind{i2}),...
                                                               P_bki{i2}(ind{i2},ind{i2}),...
-                                                              inv(A2),Q{i2},a{i2},[],a_param{i2});
+                                                              effinv(A2),Q{i2},a{i2},[],a_param{i2});
             
         end 
         
@@ -234,11 +234,11 @@ function [x_sk,P_sk,x_sik,P_sik,mu_sk] = eimm_smooth(MM,PP,MM_i,PP_i,MU,p_ij,mu_
                 PP1 = PP_def;
                 PP1(ind{i2},ind{i2}) = PP_i{i2,k};
 
-                iPP1 = inv(PP1);
-                iPP2 = inv(P_kp{i1});
+                iPP1 = effinv(PP1);
+                iPP2 = effinv(P_kp{i1});
                 
                 % Covariance of the Gaussian product
-                P_jis{i2,i1} = inv(iPP1+iPP2);
+                P_jis{i2,i1} = effinv(iPP1+iPP2);
                 % Mean of the Gaussian product
                 x_jis{i2,i1} = P_jis{i2,i1}*(iPP1*MM1 + iPP2*x_kp{i1});
             end
