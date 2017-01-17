@@ -279,7 +279,7 @@
   ME1_UKF = squeeze(SP1_UKF(1,1,:)+SP1_UKF(2,2,:));
   
   % UTF Smoother
-  IAW = inv(A)*[eye(size(A,1)) eye(size(A,1))];
+  IAW = effinv(A)*[eye(size(A,1)) eye(size(A,1))];
   [SM2_UKF,SP2_UKF] = utf_smooth1(MM_UKF,PP_UKF,Y,IAW,Q,[],...
 		                   h_func,R*eye(2),[S1 S2]);
   uks_rmse2 = sqrt(mean((X(1,:)-SM2_UKF(1,:)).^2+(X(2,:)-SM2_UKF(2,:)).^2));

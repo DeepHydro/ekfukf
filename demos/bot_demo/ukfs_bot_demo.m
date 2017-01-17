@@ -171,7 +171,7 @@
   ME1 = squeeze(SP1(1,1,:)+SP1(2,2,:));
   
   % Smoothing with UTF
-  IAW = inv(A)*[eye(size(A,1)) eye(size(A,1))];
+  IAW = effinv(A)*[eye(size(A,1)) eye(size(A,1))];
   [SM2,SP2] = utf_smooth1(MM,PP,Y,IAW,Q,[],...
 		     h_func,R*eye(2),[S1 S2]);
   uks_rmse2 = sqrt(mean((X(1,:)-SM2(1,:)).^2+(X(2,:)-SM2(2,:)).^2));
