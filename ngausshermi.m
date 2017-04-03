@@ -97,7 +97,7 @@ function [I,SX,x,W,F] = ngausshermi(f,n,m,P,param)
   end
   
   % Form the sigma points and weights
-  L = chol(P)';
+  L = semichol(P)';
   SX = sqrt(2)*L*x(ind)+repmat(m,1,size(ind,2));
   W = prod(W(ind),1); % ND weights
   

@@ -34,7 +34,7 @@ function [mu,S,C] = cd_transform(m,P,g,g_param,tr_param)
     end
     
     d = size(m,1);
-    cholP = chol(P)';
+    cholP = semichol(P)';
     
     g_mu = feval(g,m,g_param);
     s = size(g_mu,1);

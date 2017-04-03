@@ -30,6 +30,6 @@
 function X = ut_sigmas(M,P,c);
 
 %  A = schol(P);
-  A = chol(P)';
+  A = semichol(P)';
   X = [zeros(size(M)) A -A];
   X = sqrt(c)*X + repmat(M,1,size(X,2));

@@ -204,7 +204,7 @@ for k=1:size(Y,2)
     % Confidence ellipse
     tt = (0:0.01:1)*2*pi;
     cc = repmat(M(1:2),1,length(tt)) + ...
-	 2*chol(P(1:2,1:2))'*[cos(tt);sin(tt)];
+	 2*semichol(P(1:2,1:2))'*[cos(tt);sin(tt)];
 
     % Animate
     plot(X_r(1,:),X_r(2,:),'-',...
@@ -239,7 +239,7 @@ for k=size(Y,2):-1:1
     % Confidence ellipse
     tt = (0:0.01:1)*2*pi;
     cc = repmat(M(1:2),1,length(tt)) + ...
-	 2*chol(P(1:2,1:2))'*[cos(tt);sin(tt)];
+	 2*semichol(P(1:2,1:2))'*[cos(tt);sin(tt)];
 
     % Animate
     len = 1.5;

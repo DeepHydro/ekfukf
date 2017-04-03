@@ -34,6 +34,6 @@ function X = gauss_rnd(M,S,N)
     N = 1;
   end
   
-  L = chol(S)';
+  L = semichol(S)';
   X = repmat(M,1,N) + L*randn(size(M,1),size(M,2)*N);
   

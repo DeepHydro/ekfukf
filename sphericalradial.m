@@ -39,7 +39,7 @@ function [I,x,W,F] = sphericalradial(f,m,P,param)
   
   % Scaling
   x = sqrt(n)*x;
-  x = chol(P)'*x + repmat(m,1,2*n);
+  x = semichol(P)'*x + repmat(m,1,2*n);
 
   % Evaluate the function at the points
     if ischar(f) || strcmp(class(f),'function_handle')

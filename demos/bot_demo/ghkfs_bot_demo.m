@@ -125,7 +125,7 @@
       EST = M;
       tt = (0:0.01:1)*2*pi;
       cc = repmat(M(1:2),1,length(tt)) + ...
-        	  2*chol(P(1:2,1:2))'*[cos(tt);sin(tt)];
+        	  2*semichol(P(1:2,1:2))'*[cos(tt);sin(tt)];
       h = plot(X(1,:),X(2,:),'r-',...
                M(1),M(2),'bo',...
                EST(1,:),EST(2,:),'b--',...
@@ -147,7 +147,7 @@
 
         % Confidence ellipse
         cc = repmat(M(1:2),1,length(tt)) + ...
-	     2*chol(P(1:2,1:2))'*[cos(tt);sin(tt)];
+	     2*semichol(P(1:2,1:2))'*[cos(tt);sin(tt)];
 
         % Measurement directions
         len = 2.5;
@@ -202,7 +202,7 @@
     P = SP1(:,:,1);
     EST = M;
     cc = repmat(M(1:2),1,length(tt)) + ...
-	 2*chol(P(1:2,1:2))'*[cos(tt);sin(tt)];
+	 2*semichol(P(1:2,1:2))'*[cos(tt);sin(tt)];
     h = plot(X(1,:),X(2,:),'r-',...
              M(1),M(2),'o',...
              EST(1,:),EST(2,:),'--',...
@@ -221,7 +221,7 @@
 
       % Confidence ellipse
       cc = repmat(M(1:2),1,length(tt)) + ...
-	 2*chol(P(1:2,1:2))'*[cos(tt);sin(tt)];
+	 2*semichol(P(1:2,1:2))'*[cos(tt);sin(tt)];
 
       % Update graphics
       set(h(2),'xdata',M(1)); set(h(2),'ydata',M(2));
